@@ -69,5 +69,59 @@ router.post("/test-post-4", function(req, res) {
     arr.push(ele)
     res.send(  { msg: arr , status: true }  )
 })
+//----------------------------------------
+let player=[{
+    name: "manish",
+dob: "1/1/1995",
+gender: "male",
+city: "jalandhar",
+sports: [
+"swimming"
+]
 
+},
+{
+    name: "mansi",
+    dob: "12/07/2000",
+    gender: "female",
+    city: "kanpur",
+    sports: ["tennis"]
+},
+{
+    name: "shivanshu",
+    dob: "24/07/2004",
+    gender: "male",
+    city: "mathura",
+    sports: ["cricket"]
+}, 
+];
+router.post("/players",function(req,res){
+    console.log(player)
+    let newp=req.body;// body me data aa jayega
+    // player name should be unqiue,this name should not exit in the player array
+
+    let find=req.body.name;
+    console.log(" new player find :",newp);
+    for(let i of player){
+        if(i.name==find){
+ return res.send(" name already present")
+        }
+    }
+        player.push(newp)
+        res.send({msg:player,status:true})
+    
+})
+//let myArr=[23,45,67,281394,423,24,42323,4,234,12,34]
+//router.post("/post-query-2",function(req,res){
+  //  let input=req.query.input
+    //let finalArr=[]
+    //for(let i=0;i<myArr.length;i++){
+      //  if(myArr[i]>input)
+        //finalArr.push(myArr[i])
+    //}
+    //res.send({data:myArr,status:true})
+//})
 module.exports = router;
+//query and parms
+//parms(path parm):used to load differnt items/pages based on a variable value in url
+// parms variable name is not visible in the url
