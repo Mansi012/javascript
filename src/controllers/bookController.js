@@ -1,4 +1,5 @@
 const { count } = require("console")
+const bookModel = require("../models/bookModel")
 const BookModel= require("../models/bookModel")
 
 const createBook= async function (req, res) {
@@ -65,21 +66,58 @@ const getBooksData= async function (req, res) {
     
     // ASYNC AWAIT
     
-    let a= 2+4
-    a= a + 10
-    console.log(a)
+   // let a= 2+4
+    //a= a + 10
+    //console.log(a)
     let allBooks= await BookModel.find( )  //normally this is an asynchronous call..but await makes it synchronous
 
 
     // WHEN AWAIT IS USED: - database + axios
     //  AWAIT can not be used inside forEach , map and many of the array functions..BE CAREFUL
-    console.log(allBooks)
-    let b = 14
-    b= b+ 10
-    console.log(b)
+   // console.log(allBooks)
+    //let b = 14
+    //b= b+ 10
+    //console.log(b)
     res.send({msg: allBooks})
 }
-
-
+let bookList= async function(req,res){
+    let allBooksAuthor=await BookModel.find().select({
+        bookName:1,
+        authorName:1,
+        _id:0,
+    });
+    res.send({msg:allBooksAuthor})
+}
+let getBooksinYear=async function(req,res){
+    let year=req.query.year
+    console.log(year)
+    let findYear=await BookModel.find({year:year});
+    res.send({msg:findYear})
+}
+let getParticularBooks=async function(req,res){
+    let allBook=req.body
+    console.log(allBook)
+    let allBooks=await bookModel.find()
+    res.send({msg:allBooks})
+}
+let getXINRBooks=async function(req,res){
+    let indPrice=await bookModel.find({
+"price.indianprices":{$in:["Rs700","Rs800","Rs900"]}
+    })
+res.send({msg:indPrice})
+}
+let getRandomBooks=async function(res,req){
+    let bookpage=await bookModel.find({
+        $or:[{stockAvailable:true},{
+            totalPages:{$gt:500}
+        }]
+    })
+    res.send(bookpage)
+} 
 module.exports.createBook= createBook
 module.exports.getBooksData= getBooksData
+module.exports.bookList=bookList
+module.exports.getBooksinYear=getBooksinYear
+module.exports.getParticularBooks=getParticularBooks
+module.exports.getXINRBooks=getXINRBooks
+module.exports.getRandomBooks=getRandomBooks
