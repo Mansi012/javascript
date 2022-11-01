@@ -11,25 +11,14 @@ const basicCode= async function(req, res) {
     console.log( "hey man, congrats you have reached the Handler")
     res.send({ msg: "This is coming from controller (handler)"})
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    const basicCode4 = async function (req, res) {
+        return console.log("/getTime");
+      };
+      
+      const basicCode5 = async function (req, res) {
+          return console.log("/getNest");
+        };
+      
 const createUser= async function (req, res) {
     let data= req.body
     let savedData= await UserModel.create(data)
@@ -44,3 +33,5 @@ const getUsersData= async function (req, res) {
 module.exports.createUser= createUser
 module.exports.getUsersData= getUsersData
 module.exports.basicCode= basicCode
+module.exports.basicCode4=basicCode4
+module.exports.basicCode5=basicCode5
